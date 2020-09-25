@@ -3082,7 +3082,8 @@ class Record(object):
             record._data[0] = SPACE
         if record._data[0] not in (SPACE, ASTERISK):
             # TODO: log warning instead
-            raise DbfError("record data not correct -- first character should be a ' ' or a '*'.")
+            print("record data not correct -- first character should be a ' ' or a '*'.")
+            # raise DbfError("record data not correct -- first character should be a ' ' or a '*'.")
         if not _fromdisk and layout.location == ON_DISK:
             record._update_disk()
         return record
@@ -6465,7 +6466,9 @@ class Db3Table(Table):
                     null_index
                     )
         if offset != total_length:
-            raise BadDataError("Header shows record length of %d, but calculated record length is %d" % (total_length, offset))
+            # FIXME length neq, but stripped data is ok.
+            print("Header shows record length of %d, but calculated record length is %d" % (total_length, offset))
+            # raise BadDataError("Header shows record length of %d, but calculated record length is %d" % (total_length, offset))
         meta.user_fields = FieldnameList([f for f in meta.fields if not meta[f][FLAGS] & SYSTEM])
         meta.user_field_count = len(meta.user_fields)
         Record._create_blank_data(meta)
